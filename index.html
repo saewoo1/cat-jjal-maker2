@@ -145,7 +145,7 @@
 
         function handleHeartClick() {
           const nextFavorites = [...favorites, mainCat];
-          setFavorites([nextFavorites]);
+          setFavorites(nextFavorites); // 변수에 []쳤는지.. 잘 보자^^
           jsonLocalStorage.setItem('favorites', nextFavorites);
           
         }
