@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>고양이 가라사대</title>
+  </head>
+  <style>
+    body {
+      text-align: center;
+    }
+    .main-card button {
+      position: relative;
+      left: -45px;
+      bottom: 15px;
+    }
+    .favorites {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+  </style>
+  <body>
+    <div id="app">
+
+    </div>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+      console.log("야옹");     
+
+      function CatItem(props) {
+        return (
+          <li>
+            <img src={props.img} style={{width: '150px'}}/>
+          </li>
+        );
+      }
+
+      function Favorites({favorites}) {
+
+        return (
+          <ul className="favorites">
+            {favorites.map(cat => (
+              <CatItem img={cat} key={cat}/>
+              ))}
+          </ul>
+        );
+      }
+
+      const MainCard = ({img, handleHeartClick}) => {
+
+        return (
+          <div className="main-card">
+            <img
+              src={img}
+              alt="고양이"
+              width="400"
+            />
+            <button onClick={handleHeartClick} >🤍</button>
+          </div>
+        );
+      }
+
+
+      const Title = (props) => {
+        return (
+          <h1>{props.children}</h1>
+        );
+      };
+
+      const Form = ({handleFormSubmit}) => {
+        const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
+
+        const [value, setValue] = React.useState('');
+
+        function handleInputChange(e) {
+          setValue(e.target.value.toUpperCase());
+        }
+
+        return (
+          <form onSubmit={handleFormSubmit}>
+            <input 
+            type="text" 
+            name="name"
+            placeholder="영어 대사를 입력해주세요"
+            value={value}
+            onChange={handleInputChange}
+            />
+            <button type="submit">생성</button> 
+          </form>
+        )
+      };
+      // 왜 button에 onSubmit을 안다는가?? -> 제출되는건 form이니까 !! 달아도 되긴 한대
+
+      const App = () => {
+        const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+        const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+        const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+
+        const [counter, setCounter] = React.useState(1);
+        const [mainCat, setmainCat] = React.useState(CAT1);
+        const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
+
+        function handleFormSubmit(e) {
+          e.preventDefault(); //js 문법
+          console.log("폼 전송됨");
+          setCounter(counter + 1);
+          setmainCat(CAT2);
+        }
+
+        function handleHeartClick() {
+          console.log("하뚜");
+          setFavorites([...favorites, CAT3]);
+        }
+
+        return (
+          <div>
+            <Title >{counter}번째 고양이 가라사대</Title>
+            <Form handleFormSubmit={handleFormSubmit}/>
+            <MainCard img={mainCat} handleHeartClick={handleHeartClick} />
+            <Favorites favorites={favorites}/>
+          </div>
+        );
+      }; // 최상위 태그가 두개야..! -> div로 감싸주기! 빈 태그로 감싸도 된다
+
+      const 여기다가그려 = document.querySelector("#app")
+
+      ReactDOM.render(<App />, 여기다가그려); //render에 두개 요소를 하고싶은데 어덕해??
+    </script>
+  </body>
+</html>
+
+<!-- 생성 -> maincard CAT2로 -->
