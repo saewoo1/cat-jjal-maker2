@@ -54,7 +54,7 @@
         );
       }
 
-      const MainCard = ({img, handleHeartClick}) => {
+      const MainCard = ({img, onHeartClick}) => {
 
         return (
           <div className="main-card">
@@ -63,7 +63,7 @@
               alt="고양이"
               width="400"
             />
-            <button onClick={handleHeartClick} >🤍</button>
+            <button onClick={onHeartClick} >🤍</button>
           </div>
         );
       }
@@ -75,15 +75,31 @@
         );
       };
 
-      const Form = ({handleFormSubmit}) => {
+      const Form = ({updateMainCat}) => {
         const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
-
         const [value, setValue] = React.useState('');
+        const [errorMessage, setErrorMessage] = React.useState('');
 
         function handleInputChange(e) {
+          const userValue = e.target.value;
+          if (includesHangul(userValue)) {
+            setErrorMessage("한글은 안된다냥!!");
+          } else {
+            setErrorMessage("");
+          }
           setValue(e.target.value.toUpperCase());
         }
 
+        function handleFormSubmit(e) {
+          e.preventDefault();
+          if (value == '') {
+            setErrorMessage('빈값도 싫다냥!!');
+            return;
+          } else {
+            setErrorMessage('');
+          }
+          updateMainCat();
+        }
         return (
           <form onSubmit={handleFormSubmit}>
             <input 
@@ -94,6 +110,7 @@
             onChange={handleInputChange}
             />
             <button type="submit">생성</button> 
+            <p style={{color: 'red'}}>{errorMessage}</p>
           </form>
         )
       };
@@ -104,27 +121,26 @@
         const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
         const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
 
-        const [counter, setCounter] = React.useState(1);
+        const [counter, setCounter] = React.useState(Number(localStorage.getItem('counter')));
         const [mainCat, setmainCat] = React.useState(CAT1);
         const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
 
-        function handleFormSubmit(e) {
-          e.preventDefault(); //js 문법
-          console.log("폼 전송됨");
-          setCounter(counter + 1);
+        function updateMainCat() {
           setmainCat(CAT2);
+          const nextCounter = counter + 1;
+          setCounter(nextCounter); // 눈에 보이는 {counter} 값
+          localStorage.setItem("counter", nextCounter); // browser에 저장되는 값
         }
 
         function handleHeartClick() {
-          console.log("하뚜");
           setFavorites([...favorites, CAT3]);
         }
 
         return (
           <div>
             <Title >{counter}번째 고양이 가라사대</Title>
-            <Form handleFormSubmit={handleFormSubmit}/>
-            <MainCard img={mainCat} handleHeartClick={handleHeartClick} />
+            <Form updateMainCat={updateMainCat}/>
+            <MainCard img={mainCat} onHeartClick={handleHeartClick} />
             <Favorites favorites={favorites}/>
           </div>
         );
