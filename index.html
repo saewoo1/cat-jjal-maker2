@@ -32,7 +32,18 @@
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    
     <script type="text/babel">
+
+      const jsonLocalStorage = {
+        setItem: (key, value) => {
+          localStorage.setItem(key, JSON.stringify(value)); //
+        },
+        getItem: (key) => {
+          return JSON.parse(localStorage.getItem(key));
+        },
+      };
+
       console.log("야옹");     
 
       function CatItem(props) {
@@ -121,19 +132,22 @@
         const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
         const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
 
-        const [counter, setCounter] = React.useState(Number(localStorage.getItem('counter')));
+        const [counter, setCounter] = React.useState(jsonLocalStorage.getItem('counter')); //localStorage는 string으로 값을 뱉어준다
         const [mainCat, setmainCat] = React.useState(CAT1);
-        const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
+        const [favorites, setFavorites] = React.useState(jsonLocalStorage.getItem("favorites") || []);
 
         function updateMainCat() {
           setmainCat(CAT2);
           const nextCounter = counter + 1;
           setCounter(nextCounter); // 눈에 보이는 {counter} 값
-          localStorage.setItem("counter", nextCounter); // browser에 저장되는 값
+          jsonLocalStorage.setItem("counter", nextCounter); // browser에 저장되는 값
         }
 
         function handleHeartClick() {
-          setFavorites([...favorites, CAT3]);
+          const nextFavorites = [...favorites, mainCat];
+          setFavorites([nextFavorites]);
+          jsonLocalStorage.setItem('favorites', nextFavorites);
+          
         }
 
         return (
