@@ -1,9 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import Title from './components/Title';
 import Form from './components/Form';
 import MainCard from './components/MainCard';
+import Favorites from './components/Favorites';
 
 const jsonLocalStorage = {
   setItem: (key, value) => {
@@ -22,30 +22,6 @@ const fetchCat = async (text) => {
 };
 
 console.log("야옹");     
-
-function CatItem(props) {
-  return (
-    <li>
-      <img src={props.img} style={{width: '150px'}}/>
-    </li>
-  );
-}
-
-function Favorites({favorites}) {
-  if (favorites.length === 0) {
-    return (<div>사진 위 하트를 눌러 고양이 사진을 저장해봥</div>);
-  } 
-
-  return (
-    <ul className="favorites">
-      {favorites.map(cat => (
-        <CatItem img={cat} key={cat}/>
-        ))}
-    </ul>
-  );
-}
-
-
 
 const App = () => {
   const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
