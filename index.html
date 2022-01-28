@@ -62,6 +62,9 @@
       }
 
       function Favorites({favorites}) {
+        if (favorites.length === 0) {
+          return (<div>사진 위 하트를 눌러 고양이 사진을 저장해봥</div>);
+        } 
 
         return (
           <ul className="favorites">
@@ -72,7 +75,8 @@
         );
       }
 
-      const MainCard = ({img, onHeartClick}) => {
+      const MainCard = ({img, onHeartClick, alreadyFavorite}) => {
+        const heartIcon = alreadyFavorite ? "💖" : "🤍";
 
         return (
           <div className="main-card">
@@ -81,7 +85,7 @@
               alt="고양이"
               width="400"
             />
-            <button onClick={onHeartClick} >🤍</button>
+            <button onClick={onHeartClick} >{heartIcon}</button>
           </div>
         );
       }
@@ -140,13 +144,25 @@
         const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
 
         const [counter, setCounter] = React.useState(jsonLocalStorage.getItem('counter')); //localStorage는 string으로 값을 뱉어준다
-        const [mainCat, setmainCat] = React.useState(CAT1);
+        const [mainCat, setMainCat] = React.useState(CAT1);
         const [favorites, setFavorites] = React.useState(jsonLocalStorage.getItem("favorites") || []);
+
+        const alreadyFavorite = favorites.includes(mainCat);
+
+        async function setInitalCat() {
+          const newCat = await fetchCat('First Cat');
+          setMainCat(newCat);
+        }
+
+        React.useEffect(() => {
+          setInitalCat();
+        }, [])
+
 
         async function updateMainCat(value) {
           const newCat = await fetchCat(value);
 
-          setmainCat(newCat);
+          setMainCat(newCat);
           const nextCounter = counter + 1;
           setCounter(nextCounter); // 눈에 보이는 {counter} 값
           jsonLocalStorage.setItem("counter", nextCounter); // browser에 저장되는 값
@@ -159,11 +175,13 @@
           
         }
 
+        const counterTitle = counter === null ? "" : counter + '번째 ';
+
         return (
           <div>
-            <Title >{counter}번째 고양이 가라사대</Title>
+            <Title > {counterTitle} 고양이 가라사대</Title>
             <Form updateMainCat={updateMainCat}/>
-            <MainCard img={mainCat} onHeartClick={handleHeartClick} />
+            <MainCard img={mainCat} onHeartClick={handleHeartClick} alreadyFavorite={alreadyFavorite} />
             <Favorites favorites={favorites}/>
           </div>
         );
