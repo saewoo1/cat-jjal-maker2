@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
+import Title from './components/Title';
+import Form from './components/Form';
+import MainCard from './components/MainCard';
 
 const jsonLocalStorage = {
   setItem: (key, value) => {
@@ -42,68 +45,7 @@ function Favorites({favorites}) {
   );
 }
 
-const MainCard = ({img, onHeartClick, alreadyFavorite}) => {
-  const heartIcon = alreadyFavorite ? "💖" : "🤍";
 
-  return (
-    <div className="main-card">
-      <img
-        src={img}
-        alt="고양이"
-        width="400"
-      />
-      <button onClick={onHeartClick} >{heartIcon}</button>
-    </div>
-  );
-}
-
-
-const Title = (props) => {
-  return (
-    <h1>{props.children}</h1>
-  );
-};
-
-const Form = ({updateMainCat}) => {
-  const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
-  const [value, setValue] = React.useState('');
-  const [errorMessage, setErrorMessage] = React.useState('');
-
-  function handleInputChange(e) {
-    const userValue = e.target.value;
-    if (includesHangul(userValue)) {
-      setErrorMessage("한글은 안된다냥!!");
-    } else {
-      setErrorMessage("");
-    }
-    setValue(e.target.value.toUpperCase());
-  }
-
-  function handleFormSubmit(e) {
-    e.preventDefault();
-    if (value == '') {
-      setErrorMessage('빈값도 싫다냥!!');
-      return;
-    } else {
-      setErrorMessage('');
-    }
-    updateMainCat(value);
-  }
-  return (
-    <form onSubmit={handleFormSubmit}>
-      <input 
-      type="text" 
-      name="name"
-      placeholder="영어 대사를 입력해주세요"
-      value={value}
-      onChange={handleInputChange}
-      />
-      <button type="submit">생성</button> 
-      <p style={{color: 'red'}}>{errorMessage}</p>
-    </form>
-  )
-};
-// 왜 button에 onSubmit을 안다는가?? -> 제출되는건 form이니까 !! 달아도 되긴 한대
 
 const App = () => {
   const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
