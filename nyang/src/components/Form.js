@@ -8,7 +8,7 @@ const Form = ({updateMainCat}) => {
     function handleInputChange(e) {
       const userValue = e.target.value;
       if (includesHangul(userValue)) {
-        setErrorMessage("한글은 안된다냥!!");
+        setErrorMessage("🐱: 한쿸뫌.. 몰라요 ❌");
       } else {
         setErrorMessage("");
       }
@@ -18,7 +18,7 @@ const Form = ({updateMainCat}) => {
     function handleFormSubmit(e) {
       e.preventDefault();
       if (value == '') {
-        setErrorMessage('빈값도 싫다냥!!');
+        setErrorMessage('🐱...? ❌');
         return;
       } else {
         setErrorMessage('');
