@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+### package.json
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- 어떤 라이브러리들을 쓰고있는지, 어떤 명령어를 통해서 뭘 하는지 나와있음
+- "scripts" : {} 명령어 저장해둘 수 있음
 
-## Available Scripts
+### github hompage에 어떻게 올려요?
 
-In the project directory, you can run:
+- 그대로 갖다 박으면 안돼요. html은 브라우저에 띄우면 알아먹지만, 리액트껀 못알아들으니 잘 타일러줍시다.
+- build 과정이 필요하다.
+- CRA 내부에서 npm run build
+- Browser에 JSX를 그대로 올리는게 아니라, build 폴더를 올리는거래
+- npm install gh-pages
+- script 내부에 "deploy": "gh-pages -d build" 추가 -> github pages를 통해서 build 폴더 올려라
+- package.json 최상단에 "hompage": "https://saewoo1.github.io/cat-jjal-maker2" 추가. 슬래시 꼭 지워잉
+- npm run build
+- npm run deploy
 
-### `npm start`
+### 어떤 기능을 넣고싶냐면요..
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 쓸데없이 화려하게
+- 생성 버튼을 누를 때 고앵이 소리
+- 실패 시 하악질 하는 소리
+- 밑에 고양이가 걸어다니는 애니메이션
+- 마우스 포인터 이미지
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 가능하면 분류도..?
