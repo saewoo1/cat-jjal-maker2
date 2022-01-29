@@ -24,14 +24,15 @@ const fetchCat = async (text) => {
 console.log("야옹");     
 
 const App = () => {
-  const CAT1 = "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+  const CAT1 = "https://media.giphy.com/media/bcqAMUTUHoLDy/giphy.gif"; // 수정 - 내장 이미지로 넣고싶은디
   const CAT2 = "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
   const CAT3 = "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
 
   const [counter, setCounter] = React.useState(() => {
     return jsonLocalStorage.getItem('counter');
   });//localStorage는 string으로 값을 뱉어준다
-  //이런식으로 useState의 값을 function으로 넘겨주면, 불필요한 접근을 막을 수 있다.
+    //이런식으로 useState의 값을 function으로 넘겨주면, 불필요한 접근을 막을 수 있다.
+
   const [mainCat, setMainCat] = React.useState(CAT1);
   const [favorites, setFavorites] = React.useState(() => {
     return jsonLocalStorage.getItem("favorites") || [];
@@ -40,7 +41,7 @@ const App = () => {
   const alreadyFavorite = favorites.includes(mainCat);
 
   async function setInitalCat() {
-    const newCat = await fetchCat('First Cat');
+    const newCat = await fetchCat('HELLO, STRANGER');
     setMainCat(newCat);
   }
 
